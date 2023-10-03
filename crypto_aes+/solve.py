@@ -11,8 +11,7 @@ def pkcs7_pad(data: bytes, length: int):
 
 
 def function(data):
-    if data is not bytes:
-        data = data.encode()
+    data = data.encode()
     data += flag
     block_size = 16
     desired_length = len(data) + (-len(data) % block_size)
@@ -22,5 +21,4 @@ def function(data):
 
 
 if __name__ == "__main__":
-    while True:
-        print(function(input("Text to encrypt: ")))
+    print(function(input("String to encrypt: ")))
