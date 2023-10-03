@@ -11,8 +11,10 @@ def pkcs7_pad(data: bytes, length: int):
 
 
 def function(data):
-    if data is not bytes:
+    try:
         data = data.encode()
+    except:
+        pass
     data += flag
     block_size = 16
     desired_length = len(data) + (-len(data) % block_size)
