@@ -1,0 +1,27 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{minted}
+
+\title{WiCyS CTF 2023 Mission Impossi-bird Writeup}
+\author{Manav Malik}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+We begin, as always, by examining the challenge description:
+
+\begin{quote}
+    Fun, true fact: canaries are inherently evil birds and never let go of grudges.
+    
+    Your friend, Featherly the Friendly Finch has been kidnapped by his nemesis, Canary McDevious! Your mission, should you choose to accept it, is to rescue Featherly by navigating this program.
+\end{quote}
+Okay, super helpful. Examining the source code, we see that we need to somehow execute the {\sf rescue()} function, even though that is never written in the code. This hints at a buffer overflow exploit that will allow us to call the function. The only location in the code that seems vulnerable to this kind of exploit is the {\sf cage()} function and its use of {\sf strcpy()}.
+
+Our first step in getting this function to run with our input payload is ensuring that {\sf polite} is 1 so the {\sf if} statement evaluates to {\sf true}. Because we get to pick the seed for the generator, we can determine which seed results in a {\sf polite} value of 1.
+
+All that's left to do from here is smash the stack with our input in the {\sf cage()} function and sidestep the hard-coded canary (or overwrite its value in the code). Now, we can execute the {\sf rescue()} function and get the flag! {\sf WCS\{e4gl3\_3yed\_expl0i7er\}}
+
+\end{document}
